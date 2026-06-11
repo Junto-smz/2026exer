@@ -11,40 +11,25 @@ class DBwMergeSort(DB):  # ヒープソート用のクラス
         super().__init__()  # 親クラスの__init()__の呼び出し
           # キューのインスタンスを生成
 
-    def sort(self):
+    def sort(self,list=None):
 
         size = self.count()
         if size <= 1:
             return self.list
         middle = size // 2
-        left = self.list[0:middle-1]
+        left = self.list[0:middle]
         right = self.list[middle:size-1]
         
-        left = self.sort_div(left)
-        right = self.sort_div(right)
+        left = self.sort(left)
+        right = self.sort(right)
         
         self.merge(left,right)
-        
-    def sort_div(self,list):
-        
-        size = len(list)
-        if size <= 1:
-            return list
-        middle = size // 2
-        left = list[0:middle-1]
-        right = list[middle:size-1]
-        
-        left = self.sort_div(left)
-        right = self.sort_div(right)
-        
-        self.merge(left,right)
-        
     
     def merge(self,left,right):
         result = []
         i = 0
         j = 0
-        while i <= len(left) and j <= len(right):
+        while i < len(left) and j < len(right):
             if left[i].lng < right[j].lng:
                 result.append(left[i])
                 i += 1
