@@ -1,4 +1,3 @@
-# 穴埋め問題用のプログラム
 from def_stop import Stop  # Stopクラスの読み込み
 from def_heap import Heap  # Heapクラスの読み込み
 from def_queue_stack import Queue  # Queueクラスの読み込み
@@ -6,26 +5,39 @@ from def_db import DB  # DBクラスの読み込み
 import time  # 実行時間を計測するためのモジュール
 
 
-class DBwMergeSort(DB):  # ヒープソート用のクラス
+class DBwMergeSort(DB):  # マージソート用のクラス
     def __init__(self):
         super().__init__()  # 親クラスの__init()__の呼び出し
-          # キューのインスタンスを生成
 
-    def sort(self,list=None):
+    def sort(self, target_list=None):
+        # 初回呼び出し（引数なし）の時は、DBが持つ全体のリストを対象にする
+        if target_list is None:
+            target_list = self.list
 
-        size = self.count()
+        # self.count() ではなく、引数で渡されたリストのサイズを計測する
+        size = len(target_list)
         if size <= 1:
-            return self.list
+            return target_list
+            
         middle = size // 2
-        left = self.list[0:middle]
-        right = self.list[middle:size-1]
+        # スライスの範囲を正しく修正（末尾まで含める）
+        left = target_list[0:middle]
+        right = target_list[middle:size]
         
+        # 分割したリストを再帰的にソート
         left = self.sort(left)
         right = self.sort(right)
         
-        self.merge(left,right)
+        # ソート済みの左右のリストをマージ
+        merged_list = self.merge(left, right)
+        
+        # 最上位の呼び出し（全体のソート）が終わったら、元の self.list を更新する
+        if len(target_list) == len(self.list):
+            self.list = merged_list
+            
+        return merged_list
     
-    def merge(self,left,right):
+    def merge(self, left, right):
         result = []
         i = 0
         j = 0
@@ -37,17 +49,17 @@ class DBwMergeSort(DB):  # ヒープソート用のクラス
                 result.append(right[j])
                 j += 1
         
+        # 不等号を < に修正して IndexError を防止
         if i == len(left):
-            while j <= len(right):
+            while j < len(right):
                 result.append(right[j])
                 j += 1
         else:
-            while i <= len(left):
+            while i < len(left):
                 result.append(left[i])  
                 i += 1
         return result
                 
-
 
 if __name__ == '__main__':  # モジュールとしてインポートされるときは実行しない
     fi = open('allkyotobus_stop.dat', 'r', encoding='utf-8')
