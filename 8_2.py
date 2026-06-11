@@ -39,8 +39,6 @@ class DBwMergeSort(DB):  # ヒープソート用のクラス
         
         self.merge(left,right)
         
-        
-        
     
     def merge(self,left,right):
         result = []
