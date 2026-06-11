@@ -14,7 +14,7 @@ class DBwHeapSort(DB):  # ヒープソート用のクラス
 
     def sort(self):
         self.heap.build_heap(self.list)  # self.listからヒープを構築
-        min = self.heap.delete_min()  # ヒープの根を取得する
+        min = self.heap.delete_min()  # ヒープの根を取得
         while min is not None:  # ヒープの根が取得できる限り繰り返す
             self.queue.enqueue(min)  # ヒープの根をキューに追加
             min = self.heap.delete_min()  # ヒープの根を取得する
