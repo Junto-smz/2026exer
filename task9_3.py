@@ -65,6 +65,9 @@ class Graph:
         
         if flag:
             self.num_edges -= 1
+            
+    def remove_node(self,id):
+           
 
 if __name__ == '__main__':  # モジュールとしてインポートされるときは実行しない
     fi = open('kyotocitybus_line.dat', 'r', encoding = 'utf-8')
