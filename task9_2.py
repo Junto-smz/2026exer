@@ -49,6 +49,27 @@ class Graph:
                 print('{} is connected to {} by {}.'.format(id, neighbor.id, neighbor.label))
                 
     def remove_undirected_edge(self,sid,tid,label=None):
+        targets_sid = self.node_list[sid]
+        targets_tid = self.node_list[tid]
+        flag = False
+        for target in targets_sid:
+           if target.id == tid:
+               if label == None or target.label:
+                   targets_sid.remove(target)
+                   flag = True 
+        for target in targets_tid:
+           if target.id == sid:
+               if label == None or target.label:
+                   targets_tid.remove(target)
+                   flag = True 
+        
+        if flag:
+            self.num_edges -= 1
+
+
+        
+                   
+        
         
 
 if __name__ == '__main__':  # モジュールとしてインポートされるときは実行しない
@@ -59,6 +80,7 @@ if __name__ == '__main__':  # モジュールとしてインポートされる�
         line = line.rstrip()
         items = line.split(' ')  # 1行を半角スペースで区切ってitemsリストに代入
         bus_network.add_undirected_edge(items[0], items[1], items[3])  # 無向エッジを追加
+    bus_network.remove_undirected_edge('ED01_1914','ED01_1925','M1号系統')
     print('ノード(バス停)の数は{}個'.format(bus_network.get_num_nodes()))
     print('エッジ(バス停間のリンク)の数は{}個'.format(bus_network.get_num_edges()))
     bus_network.print_graph()
