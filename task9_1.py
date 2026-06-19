@@ -11,21 +11,21 @@ class Graph:
         self.num_edges = 0  # グラフ上のエッジの数
 
     def add_node(self, id):  # グラフにノードを追加するメソッド
-        if id not in [____]:  # ノードリストにidのノードが無ければ
+        if id not in self.node_list:  # ノードリストにidのノードが無ければ
             self.node_list[id] = []  # ノードリストにidのノードを追加する．ただし、近傍はないので[]を代入
             self.num_nodes += 1  # ノードの数をインクリメント
 
     def add_directed_edge(self, sid, tid, label):  # グラフに有向エッジを追加するメソッド
         if sid not in self.node_list:  # 始点のノードが無ければ追加
-            self.add_node([____])
+            self.add_node(sid)
         if tid not in self.node_list:  # 終点のノードが無ければ追加
-            self.add_node([____])
-        self.node_list[[____]].insert(0, Neighbor([____], label))  # 近傍リストに終点のノードを追加
+            self.add_node(tid)
+        self.node_list[sid].insert(0, Neighbor(tid, label))  # 近傍リストに終点のノードを追加
         self.num_edges += 1  # エッジの数をインクリメント
 
     def add_undirected_edge(self, sid, tid, label):  # グラフに無向エッジを追加するメソッド
-        self.add_directed_edge([____], [____], label)  # 両方向にエッジを追加
-        self.add_directed_edge([____], [____], label)
+        self.add_directed_edge(sid, tid, label)  # 両方向にエッジを追加
+        self.add_directed_edge(tid, sid, label)
         self.num_edges -= 1  # エッジの数が重複するのでデクリメント
 
     def get_node_list(self):
