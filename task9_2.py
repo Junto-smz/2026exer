@@ -51,20 +51,15 @@ class Graph:
     def remove_undirected_edge(self,sid,tid,label=None):
         targets_sid = self.node_list[sid]
         targets_tid = self.node_list[tid]
-        flag = False
-        for target in targets_sid:
-           if target.id == tid:
-               if label == None or target.label:
-                   targets_sid.remove(target)
-                   flag = True 
-        for target in targets_tid:
-           if target.id == sid:
-               if label == None or target.label:
-                   targets_tid.remove(target)
-                   flag = True 
-        
-        if flag:
-            self.num_edges -= 1
+        target_lists = [targets_sid,targets_tid]
+                   
+        for target_list in target_lists:
+            for target in target_list:
+                if target.id == tid:
+                     if label == None or target.label:
+                        target_list.remove(target)
+        else:
+            self.num_edges -=1
 
 if __name__ == '__main__':  # モジュールとしてインポートされるときは実行しない
     fi = open('kyotocitybus_line.dat', 'r', encoding = 'utf-8')
