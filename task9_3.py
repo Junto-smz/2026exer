@@ -51,26 +51,21 @@ class Graph:
     def remove_undirected_edge(self,sid,tid,label=None):
         targets_sid = self.node_list[sid]
         targets_tid = self.node_list[tid]
-        flag = False
-        for target in targets_sid:
-           if target.id == tid:
-               if label == None or target.label:
-                   targets_sid.remove(target)
-                   flag = True 
-        for target in targets_tid:
-           if target.id == sid:
-               if label == None or target.label:
-                   targets_tid.remove(target)
-                   flag = True 
-        
-        if flag:
-            self.num_edges -= 1
+        target_lists = [targets_sid,targets_tid]
+                   
+        for target_list in target_lists:
+            for target in target_list:
+                if target.id == tid:
+                     if label == None or target.label:
+                        target_list.remove(target)
+        else:
+            self.num_edges -=1   
             
     def remove_node(self,id):
         count = len(self.node_list[id])
         del self.node_list[id]
-        self.num_edges -= count
         self.num_nodes -= 1
+        self.num_edges -= count
            
 
 if __name__ == '__main__':  # モジュールとしてインポートされるときは実行しない
