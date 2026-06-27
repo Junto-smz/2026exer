@@ -1,0 +1,4 @@
+# Ignore macOS metadata and Python cache directories
+__MACOSX/
+__pycache__/
+*.pyc
